@@ -1,22 +1,20 @@
 package com.example.msil_cam
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.msil_cam.databinding.ActivityLoginBinding
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
-import kotlin.math.log
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class Login : AppCompatActivity() {
     private lateinit var loginBinding: ActivityLoginBinding
-    private lateinit var employeeViewModel: EmployeeViewModel
+    private lateinit var employeeViewModel: AuthViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -24,13 +22,18 @@ class Login : AppCompatActivity() {
         val view = loginBinding.root
         setContentView(view)
 
+        lifecycleScope.launch {
+            if(isUserLoggedIn(this@Login)){
+                startActivity(Intent(this@Login, MainActivity::class.java))
+            }
+        }
+
         employeeViewModel = ViewModelProvider(
             this,
             ViewModelProvider.AndroidViewModelFactory(application),
-        )[EmployeeViewModel::class.java]
+        )[AuthViewModel::class.java]
 
-        employeeViewModel.insert(Employee(101.toString(),24032004.toString()
-        ))
+//        employeeViewModel.insert(Employee(101.toString(),24032004.toString()))
         loginBinding.btnLogin.setOnClickListener {
             employeeViewModel.login(
                 loginBinding.etId.text.toString(),
@@ -42,12 +45,20 @@ class Login : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        employeeViewModel.loginResult.observe(this) { employee->
-            if(employee != null){
+        employeeViewModel.loginResult.observe(this) { response->
+            if(response != null){
+                Toast.makeText(this, "Welcome ${response.user.name}", Toast.LENGTH_SHORT).show()
+                employeeViewModel.loadProfile()
                 startActivity(Intent(this, MainActivity::class.java))
+                finish()
             } else {
                 Toast.makeText(this, "Invalid Staff ID or DOB", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    suspend fun isUserLoggedIn(context: Context) : Boolean {
+        val prefs = context.dataStore.data.first()
+        return prefs[AuthKeys.IS_LOGGED_IN] == true
     }
 }

@@ -40,6 +40,15 @@ android {
 }
 
 dependencies {
+    // dataStore
+    implementation(libs.androidx.datastore.preferences)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.logging.interceptor)
+
+    // viewModel
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // room
     implementation(libs.androidx.room.runtime)

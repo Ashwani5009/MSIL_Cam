@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.msil_cam.Employee
+import com.example.msil_cam.models.Employee
 import com.example.msil_cam.EmployeeDao
 
 @Database(entities = [Employee::class] , version = 1 , exportSchema = true)

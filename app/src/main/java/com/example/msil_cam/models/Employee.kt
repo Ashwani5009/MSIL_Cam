@@ -1,4 +1,4 @@
-package com.example.msil_cam
+package com.example.msil_cam.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
