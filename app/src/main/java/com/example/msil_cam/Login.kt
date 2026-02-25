@@ -25,6 +25,7 @@ class Login : AppCompatActivity() {
         lifecycleScope.launch {
             if(isUserLoggedIn(this@Login)){
                 startActivity(Intent(this@Login, MainActivity::class.java))
+                finishAffinity()
             }
         }
 

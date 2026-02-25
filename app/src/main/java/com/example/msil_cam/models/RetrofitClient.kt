@@ -10,7 +10,7 @@ object RetrofitClient {
     private const val BASE_URL = "https://msil-cam.free.beeceptor.com"
 
     val api: AuthApi by lazy {
-        val logging  = HttpLoggingInterceptor()
+        val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
 
         val client = OkHttpClient.Builder()
