@@ -41,14 +41,29 @@
              android:inputType="date"/>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
-        android:layout_width="100sp"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.Material3Expressive.Light"
-        android:text="@string/login"
-        app:toggleCheckedStateOnClick="true"
-        android:layout_marginTop="20dp"
-        android:layout_gravity="center_horizontal"
-        android:padding="16dp"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnLogin"
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Material3Expressive.Light"
+            android:text="@string/login"
+            app:toggleCheckedStateOnClick="true"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="16dp"/>
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/loginLoading"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminate="true"
+            app:indicatorSize="48dp"/>
+    </FrameLayout>
 </androidx.appcompat.widget.LinearLayoutCompat>
